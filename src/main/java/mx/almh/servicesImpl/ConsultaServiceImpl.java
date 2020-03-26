@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.almh.dao.IConsultaDAO;
+import mx.almh.dao.IConsultaExamenDAO;
+import mx.almh.dto.ConsultaListaExamenDTO;
 import mx.almh.models.Consulta;
 import mx.almh.services.IConsultaService;
 
@@ -15,14 +17,20 @@ public class ConsultaServiceImpl implements IConsultaService{
 	
 	@Autowired
 	private IConsultaDAO dao;
+	
+	@Autowired
+	private IConsultaExamenDAO ceDao;
 
 	@Override
-	public Consulta registrar(Consulta consulta) {
+	public Consulta registrarTransaccional(ConsultaListaExamenDTO consultaDTO) {
 		
-		consulta.getDetalleConsulta().forEach(detalle->{
-			detalle.setConsulta(consulta);
+		consultaDTO.getConsulta().getDetalleConsulta().forEach(detalle->{
+			detalle.setConsulta(consultaDTO.getConsulta());
 		});
-		return dao.save(consulta);
+		 dao.save(consultaDTO.getConsulta());
+		 
+		 consultaDTO.getListaExamen().forEach(e->ceDao.registrar(consultaDTO.getConsulta().getIdConsulta(), e.getIdExamen()));
+	return consultaDTO.getConsulta();
 	}
 
 	@Override
@@ -49,5 +57,12 @@ public class ConsultaServiceImpl implements IConsultaService{
 	public List<Consulta> listar() {
 		return dao.findAll();
 	}
+
+	@Override
+	public Consulta registrar(Consulta t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

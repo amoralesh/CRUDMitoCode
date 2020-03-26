@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import mx.almh.dto.ConsultaListaExamenDTO;
 import mx.almh.models.Consulta;
 import mx.almh.services.IConsultaService;
 
@@ -37,8 +38,8 @@ public class ConsultaController {
 	}
 	
 	@PostMapping(produces = "application/json", consumes="application/json")
-	public Consulta registrar(@RequestBody Consulta consultad) {
-		return service.registrar(consultad);
+	public Consulta registrar(@RequestBody ConsultaListaExamenDTO consultaDTO) {
+		return service.registrarTransaccional(consultaDTO);
 		
 	}
 	
