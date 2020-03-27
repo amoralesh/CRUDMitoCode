@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import mx.almh.dao.IConsultaDAO;
 import mx.almh.dao.IConsultaExamenDAO;
@@ -21,6 +22,7 @@ public class ConsultaServiceImpl implements IConsultaService{
 	@Autowired
 	private IConsultaExamenDAO ceDao;
 
+	@Transactional
 	@Override
 	public Consulta registrarTransaccional(ConsultaListaExamenDTO consultaDTO) {
 		
